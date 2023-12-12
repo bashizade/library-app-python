@@ -8,7 +8,7 @@ class CreateUserForm(forms.Form):
     lastname = forms.CharField(max_length=255, required=True)
     password = forms.CharField(widget=forms.PasswordInput, required=True)
     phone = forms.CharField(max_length=11, required=True)
-    nationCode = forms.IntegerField()
+    nationalCode = forms.IntegerField()
 
 
 class createBook(forms.Form):

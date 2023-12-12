@@ -1,10 +1,39 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% block title %}{% endblock %} - mahs library</title>
+    <link rel="stylesheet" href="{% static 'output.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/fonts.css' %}">
 </head>
-<body>
+<body class="h-screen flex justify-center items-center">
+
+<div class="max-w-7xl w-full bg-base-300 rounded-xl shadow overflow-x-hidden overflow-y-scroll h-[40rem] p-2">
+    <div class="flex justify-center items-center space-x-2">
+        <a href="{% url 'users' %}">{% include 'components/button.html' with type="button" text="اعضا" class="btn-primary" %}</a>
+        <a href="{% url 'books' %}">{% include 'components/button.html' with type="button" text="کتاب ها" class="btn-primary" url="#" %}</a>
+        <a href="{% url 'reservations' %}">{% include 'components/button.html' with type="button" text="امانت و بازگشت" class="btn-primary" url="#" %}</a>
+    </div>
+    <hr class="my-3">
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == "success" %}
+                <div role="alert" class="alert alert-success mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  <span>{{ message }}</span>
+                </div>
+            {% elif message.tags == "error" %}
+                <div role="alert" class="alert alert-error mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  <span>{{ message }}</span>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <div class="bg-base-100 rounded-xl p-2">{% block content %}{% endblock %}</div>
+
+</div>
 
 </body>
 </html>

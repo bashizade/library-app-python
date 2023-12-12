@@ -32,19 +32,21 @@ def createUser(request):
     form = forms.CreateUserForm(request.POST)
     if form.is_valid():
         data = form.cleaned_data
-        user = User(username=data["username"],
+        User.objects.create(username=data["username"],
                     first_name=data["firstname"],
                     last_name=data['lastname'],
                     email=data['email'],
                     password=data['password']
                     ).save()
-        models.Profile(user=user,
+        user = User.objects.get(username=data['username'])
+        print(user)
+        models.Profile.objects.create(user=user,
                        phone=data['phone'],
                        nationalCode=data['nationalCode']).save()
         messages.success(request, 'کاربر با موفقیت ساخته شد')
         return redirect('users')
     else:
-        messages.error(request, 'خطا در ساخت کاربر')
+        messages.error(request, form.errors)
         return redirect('users')
 
 

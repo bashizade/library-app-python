@@ -1,0 +1,13 @@
+<!-- Open the modal using ID.showModal() method -->
+<button class="btn" onclick="{% block modal_id %}{% endblock %}.showModal()">{% block button %}{% endblock %}</button>
+<dialog id="{% block modall_id %}{% endblock %}" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box">
+    {% block modal_content %}{% endblock %}
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">بستن</button>
+      </form>
+    </div>
+  </div>
+</dialog>

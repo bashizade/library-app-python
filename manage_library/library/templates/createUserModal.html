@@ -1,0 +1,20 @@
+{% extends 'components/modal.html' %}
+
+{% block modal_id %}createUserModal{% endblock %}
+{% block modall_id %}createUserModal{% endblock %}
+
+{% block button %}عضو جدید{% endblock %}
+
+{% block modal_content %}
+<form action="{% url 'createUser' %}" method="post">
+    {% csrf_token %}
+    {% include 'components/input.html' with type="text" name="firstname" placeholder="نام عضو را وارد کنید" %}
+    {% include 'components/input.html' with type="text" name="lastname" placeholder="نام خانوادگی عضو را وارد کنید" %}
+    {% include 'components/input.html' with type="email" name="email" placeholder="ایمیل عضو را وارد کنید" %}
+    {% include 'components/input.html' with type="text" name="phone" placeholder="شماره موبایل عضو را وارد کنید" %}
+    {% include 'components/input.html' with type="text" name="nationalCode" placeholder="کد ملی عضو را وارد کنید" %}
+    {% include 'components/input.html' with type="text" name="username" placeholder="نام کاربری عضو را وارد کنید" %}
+    {% include 'components/input.html' with type="password" name="password" placeholder="رمز عبور عضو را وارد کنید" %}
+    {% include 'components/button.html' with type="submit" class="btn-accent" text="ثبت" %}
+</form>
+{% endblock %}
