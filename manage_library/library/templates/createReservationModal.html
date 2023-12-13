@@ -1,0 +1,25 @@
+{% extends 'components/modal.html' %}
+
+{% block modal_id %}createReservationModal{% endblock %}
+{% block modall_id %}createReservationModal{% endblock %}
+
+{% block button %}رزرو جدید جدید{% endblock %}
+
+{% block modal_content %}
+<form action="{% url 'createReservation' %}" method="post">
+    {% csrf_token %}
+    <div class="mb-4">
+        <select name="user_id" class="select select-bordered w-full max-w-xs">
+            <option></option>
+            <option>Greedo</option>
+        </select>
+    </div>
+    <div class="mb-4">
+        <select name="book_id" class="select select-bordered w-full max-w-xs">
+            <option></option>
+            <option>Greedo</option>
+        </select>
+    </div>
+    {% include 'components/button.html' with type="submit" class="btn-accent" text="ثبت" %}
+</form>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'components/modal.html' %}
+
+{% block modal_id %}createBookModal{% endblock %}
+{% block modall_id %}createBookModal{% endblock %}
+
+{% block button %}کتاب جدید{% endblock %}
+
+{% block modal_content %}
+<form action="{% url 'createBook' %}" method="post">
+    {% csrf_token %}
+    {% include 'components/input.html' with type="text" name="name" placeholder="نام کتاب را وارد کنید" %}
+    {% include 'components/button.html' with type="submit" class="btn-accent" text="ثبت" %}
+</form>
+{% endblock %}

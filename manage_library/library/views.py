@@ -39,7 +39,6 @@ def createUser(request):
                     password=data['password']
                     ).save()
         user = User.objects.get(username=data['username'])
-        print(user)
         models.Profile.objects.create(user=user,
                        phone=data['phone'],
                        nationalCode=data['nationalCode']).save()

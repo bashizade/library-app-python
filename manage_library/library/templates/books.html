@@ -3,4 +3,26 @@
 {% block title %}books page{% endblock %}
 
 {% block content %}
+{% include 'createBookModal.html' %}
+<div class="overflow-x-auto">
+    <table class="table w-full text-center" dir="rtl">
+        <!-- head -->
+        <thead>
+        <tr>
+            <th></th>
+            <th>نام کتاب</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+        <tr>
+            <th></th>
+            <td>{{ book.name }}</td>
+            <td><a href="{% url 'deleteBook' book_id=book.id %}">حذف</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
