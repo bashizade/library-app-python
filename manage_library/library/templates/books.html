@@ -11,6 +11,7 @@
         <tr>
             <th></th>
             <th>نام کتاب</th>
+            <th>کد کتاب</th>
             <th></th>
         </tr>
         </thead>
@@ -19,6 +20,7 @@
         <tr>
             <th></th>
             <td>{{ book.name }}</td>
+            <td>{{ book.code }}</td>
             <td><a href="{% url 'deleteBook' book_id=book.id %}">حذف</a></td>
         </tr>
         {% endfor %}

@@ -11,11 +11,11 @@ class Profile(models.Model):
 
 class Book(models.Model):
     name = models.CharField(max_length=255)
+    code = models.IntegerField(default=0)
     status = models.BooleanField(default=True)
 
 
 class Reservation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.OneToOneField(Book, on_delete=models.CASCADE)
-    day = models.IntegerField(null=True)
-    targetDay = models.DateTimeField(null=True)
+    targetDay = models.CharField(max_length=255, null=True)

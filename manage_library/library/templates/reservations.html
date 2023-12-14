@@ -3,7 +3,7 @@
 {% block title %}reservations page{% endblock %}
 
 {% block content %}
-{% include 'createReservation.html' %}
+{% include 'createReservation.html' with books=books users=users %}
 <div class="overflow-x-auto">
     <table class="table w-full text-center" dir="rtl">
         <!-- head -->
@@ -17,13 +17,15 @@
         </tr>
         </thead>
         <tbody>
-<!--        {% for book in books %}-->
-<!--        <tr>-->
-<!--            <th></th>-->
-<!--            <td>{{ book.name }}</td>-->
-<!--            <td><a href="{% url 'deleteBook' book_id=book.id %}">حذف</a></td>-->
-<!--        </tr>-->
-<!--        {% endfor %}-->
+        {% for reservation in reservations %}
+        <tr>
+            <th></th>
+            <td>{{ reservation.user.first_name }} {{ reservation.user.last_name }} - {{ reservation.user.profile.nationalCode }}</td>
+            <td>{{ reservation.book.name }} - {{ reservation.book.code }}</td>
+            <td>{{ reservation.targetDay }}</td>
+            <td><a href="{% url 'deleteReservation' reservation_id=reservation.id %}">آزادسازی</a></td>
+        </tr>
+        {% endfor %}
         </tbody>
     </table>
 </div>

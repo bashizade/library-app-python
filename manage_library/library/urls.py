@@ -10,6 +10,7 @@ urlpatterns = [
     path('create/book', views.createBook, name="createBook"),
     path('delete/book/<int:book_id>', views.deleteBook, name="deleteBook"),
     path('create/reservation', views.createReservation, name="createReservation"),
-    path('delete/reservation/<int:reservation_id>', views.deleteReservation, name="deleteReservation")
+    path('delete/reservation/<int:reservation_id>', views.deleteReservation, name="deleteReservation"),
+    path('user/card', views.UserCard, name="userCard")
 
 ]

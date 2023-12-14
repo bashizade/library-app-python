@@ -13,10 +13,10 @@ class CreateUserForm(forms.Form):
 
 class createBook(forms.Form):
     name = forms.CharField(max_length=255, required=True)
+    code = forms.CharField(max_length=255, required=True)
 
 
 class createReservation(forms.Form):
     user_id = forms.IntegerField()
     book_id = forms.IntegerField()
-    day = forms.IntegerField()
-    targetDay = forms.DateTimeField()
+    targetDay = forms.CharField(max_length=255)

@@ -5,6 +5,7 @@
 {% load jformat %}
 {% block content %}
 {% include 'createUserModal.html' %}
+<a href="{% url 'userCard' %}" target="_blank">{% include 'components/button.html' with type="button" text="خروجی کارت عصویت" %}</a>
 <div class="overflow-x-auto">
     <table class="table w-full text-center" dir="rtl">
         <!-- head -->

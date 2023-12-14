@@ -1,4 +1,4 @@
-<div class="collapse bg-base-200 max-w-4xl">
+<div class="collapse bg-base-200 max-w-4xl mb-5">
   <input type="checkbox" />
   <div class="collapse-title text-xl font-medium">
     ثبت درخواست امانت
@@ -9,17 +9,21 @@
     <div class="mb-4">
         <select name="user_id" class="select select-bordered w-full select2">
             <option>کاربر مورد نظر را انتخاب کنید</option>
-            <option>Greedo</option>
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }} - {{ user.profile.nationalCode }}</option>
+            {% endfor %}
         </select>
     </div>
     <div class="mb-4">
         <select name="book_id" class="select select-bordered w-full select2">
             <option>کتاب مورد نظر را انتخاب کنید</option>
-            <option>Greedo</option>
+            {% for book in books %}
+                <option value="{{ book.id }}">{{ book.name }} - {{ book.code }}</option>
+            {% endfor %}
         </select>
     </div>
     <div class="mb-4">
-        <input type="text" class="input input-bordered w-full persian-date" />
+        <input type="text" name="targetDay" class="input input-bordered w-full persian-date" />
     </div>
     {% include 'components/button.html' with type="submit" class="btn-accent" text="ثبت" %}
 </form>

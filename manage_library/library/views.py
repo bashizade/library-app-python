@@ -22,9 +22,17 @@ def Books(request):
     return render(request, 'books.html', {'books': books})
 
 
-def Reservations(request):
+def UserCard(request):
+    users = User.objects.all()
+    return render(request, 'userCard.html', {'users': users})
+
+def Reservations(request, form=None):
+    if form is None:
+        form = {}
     reservations = models.Reservation.objects.all()
-    return render(request, 'reservations.html', {'reservations': reservations})
+    books = models.Book.objects.all()
+    users = User.objects.all()
+    return render(request, 'reservations.html', {'reservations': reservations, 'books': books, 'users': users, 'form':form})
 
 
 @require_POST
@@ -33,15 +41,15 @@ def createUser(request):
     if form.is_valid():
         data = form.cleaned_data
         User.objects.create(username=data["username"],
-                    first_name=data["firstname"],
-                    last_name=data['lastname'],
-                    email=data['email'],
-                    password=data['password']
-                    ).save()
+                            first_name=data["firstname"],
+                            last_name=data['lastname'],
+                            email=data['email'],
+                            password=data['password']
+                            ).save()
         user = User.objects.get(username=data['username'])
         models.Profile.objects.create(user=user,
-                       phone=data['phone'],
-                       nationalCode=data['nationalCode']).save()
+                                      phone=data['phone'],
+                                      nationalCode=data['nationalCode']).save()
         messages.success(request, 'کاربر با موفقیت ساخته شد')
         return redirect('users')
     else:
@@ -54,7 +62,7 @@ def createBook(request):
     form = forms.createBook(request.POST)
     if form.is_valid():
         data = form.cleaned_data
-        models.Book(name=data['name']).save()
+        models.Book(name=data['name'], code=data['code']).save()
         messages.success(request, 'کتاب مورد نظر با موفقیت ثبت شد')
         return redirect('books')
     else:
@@ -70,19 +78,26 @@ def deleteBook(request, book_id):
 
 @require_POST
 def createReservation(request):
-    form = forms.createReservation(request.POST)
-    if form.is_valid():
-        data = form.cleaned_data
-        models.Reservation(user_id=data['user_id'],
-                           book_id=data['book_id'],
-                           day=data['day'],
-                           targetDay=data['targetDay']
-                           ).save()
-        messages.success(request, 'رزرو مورد نظر با موفقیت ثبت شد')
-        return redirect('reservations')
+    userCheck = models.Reservation.objects.filter(user_id=request.POST['user_id']).count()
+
+    if userCheck == 0:
+        form = forms.createReservation(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            models.Reservation(user_id=data['user_id'],
+                               book_id=data['book_id'],
+                               targetDay=data['targetDay']
+                               ).save()
+            messages.success(request, 'رزرو مورد نظر با موفقیت ثبت شد')
+            return redirect('reservations')
+
+        else:
+            messages.error(request, 'خطا در ثبت رزرو مورد نظر')
+            return redirect('reservations')
     else:
-        messages.success(request, 'خطا در ثبت رزرو مورد نظر')
+        messages.error(request, 'کاربر یا کتاب انتخابی در لیست امانت داران می باشد')
         return redirect('reservations')
+
 
 
 def deleteReservation(request, reservation_id):
