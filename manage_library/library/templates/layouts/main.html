@@ -29,6 +29,7 @@
 <div class="max-w-7xl w-full bg-base-300 rounded-xl shadow overflow-x-hidden overflow-y-scroll h-[40rem] p-2">
     <div class="flex justify-center items-center space-x-2">
         <a href="{% url 'users' %}">{% include 'components/button.html' with type="button" text="اعضا" class="btn-primary" %}</a>
+        <a href="{% url 'categories' %}">{% include 'components/button.html' with type="button" text="دسته بندی ها" class="btn-primary" %}</a>
         <a href="{% url 'books' %}">{% include 'components/button.html' with type="button" text="کتاب ها" class="btn-primary" url="#" %}</a>
         <a href="{% url 'reservations' %}">{% include 'components/button.html' with type="button" text="امانت و بازگشت" class="btn-primary" url="#" %}</a>
     </div>
@@ -49,6 +50,50 @@
 
 </div>
 
+<script>
+function myFunction() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
 
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+function search_category() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("search_select");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
 </body>
 </html>

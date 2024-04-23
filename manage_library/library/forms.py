@@ -16,6 +16,10 @@ class createBook(forms.Form):
     code = forms.CharField(max_length=255, required=True)
 
 
+class createCategory(forms.Form):
+    name = forms.CharField(max_length=255, required=True)
+
+
 class createReservation(forms.Form):
     user_id = forms.IntegerField()
     book_id = forms.IntegerField()

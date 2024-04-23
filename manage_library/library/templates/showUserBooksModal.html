@@ -1,0 +1,25 @@
+{% extends 'components/modal.html' %}
+
+{% block modal_id %}showUserBookModal_{{ user_id }}{% endblock %}
+{% block modall_id %}showUserBookModal_{{ user_id }}{% endblock %}
+
+{% block button %}مشاهده کتاب ها{% endblock %}
+
+{% block modal_content %}
+<div class="overflow-x-auto">
+    <table class="table w-full text-center" id="myTable" dir="rtl">
+        <tr>
+            <th>نام کتاب</th>
+            <th>تاریخ سر رسید</th>
+        </tr>
+        {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.book.name }}</td>
+                <td>{{ reservation.targetDay }}</td>
+            </tr>
+        {% endfor %}
+
+    </table>
+</div>
+
+{% endblock %}

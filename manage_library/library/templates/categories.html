@@ -1,0 +1,27 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}category page{% endblock %}
+
+{% block content %}
+{% include 'createCategoryModal.html' %}
+<input type="text" class="input input-bordered w-full max-w-xs my-3" id="myInput" onkeyup="myFunction()" placeholder="Search for ....." />
+<div class="overflow-x-auto">
+    <table class="table w-full text-center" id="myTable" dir="rtl">
+        <!-- head -->
+        <thead>
+        <tr>
+            <th></th>
+            <th>نام دسته بندی</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+        <tr>
+            <th></th>
+            <td>{{ category.name }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -6,8 +6,9 @@
 {% block content %}
 {% include 'createUserModal.html' %}
 <a href="{% url 'userCard' %}" target="_blank">{% include 'components/button.html' with type="button" text="خروجی کارت عصویت" %}</a>
+<input type="text" class="input input-bordered w-full max-w-xs my-3" id="myInput" onkeyup="myFunction()" placeholder="Search for ....." />
 <div class="overflow-x-auto">
-    <table class="table w-full text-center" dir="rtl">
+    <table class="table w-full text-center" id="myTable" dir="rtl">
         <!-- head -->
         <thead>
         <tr>
@@ -17,6 +18,7 @@
             <th>شماره تماس</th>
             <th>کد ملی</th>
             <th>تاریخ عضویت</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -28,6 +30,7 @@
             <td>{{ user.profile.phone }}</td>
             <td>{{ user.profile.nationalCode }}</td>
             <td>{{ user.date_joined|jformat:"%Y/%m/%d" }}</td>
+            <td>{% include 'showUserBooksModal.html' with user_id=user.id reservations=user.reservation_set.all %}</td>
         </tr>
         {% endfor %}
         </tbody>

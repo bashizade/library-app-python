@@ -1,0 +1,14 @@
+{% extends 'components/modal.html' %}
+
+{% block modal_id %}createCategoryModal{% endblock %}
+{% block modall_id %}createCategoryModal{% endblock %}
+
+{% block button %}دسته بندی جدید{% endblock %}
+
+{% block modal_content %}
+<form action="{% url 'createCategory' %}" method="post">
+    {% csrf_token %}
+    {% include 'components/input.html' with type="text" name="name" placeholder="نام دسته بندی را وارد کنید" %}
+    {% include 'components/button.html' with type="submit" class="btn-accent" text="ثبت" %}
+</form>
+{% endblock %}

@@ -19,8 +19,12 @@ def Users(request):
 
 def Books(request):
     books = models.Book.objects.all()
-    return render(request, 'books.html', {'books': books})
+    categories = models.Category.objects.all()
+    return render(request, 'books.html', {'books': books, 'categories': categories})
 
+def Categories(request):
+    categories = models.Category.objects.all()
+    return render(request, 'categories.html', {'categories': categories})
 
 def UserCard(request):
     users = User.objects.all()
@@ -63,6 +67,11 @@ def createBook(request):
     if form.is_valid():
         data = form.cleaned_data
         models.Book(name=data['name'], code=data['code']).save()
+        book = models.Book.objects.get(code=data['code'])
+
+        for category in request.POST.getlist('categories'):
+            models.BookCategory(book=book, category_id=category).save()
+
         messages.success(request, 'کتاب مورد نظر با موفقیت ثبت شد')
         return redirect('books')
     else:
@@ -75,27 +84,44 @@ def deleteBook(request, book_id):
     messages.success(request, 'کتاب مورد نظر با موفقیت حذف شد')
     return redirect('books')
 
+@require_POST
+def createCategory(request):
+    form = forms.createCategory(request.POST)
+    print(form)
+    if form.is_valid():
+        data = form.cleaned_data
+        models.Category(name=data['name']).save()
+        messages.success(request, 'دسته بندی مورد نظر با موفقیت ثبت شد')
+        return redirect('categories')
+    else:
+        messages.success(request, 'خطا در ثبت دسته بندی مورد نظر')
+        return redirect('categories')
 
 @require_POST
 def createReservation(request):
     userCheck = models.Reservation.objects.filter(user_id=request.POST['user_id']).count()
+    bookCheck = models.Reservation.objects.filter(book_id=request.POST['book_id']).count()
 
-    if userCheck == 0:
-        form = forms.createReservation(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            models.Reservation(user_id=data['user_id'],
-                               book_id=data['book_id'],
-                               targetDay=data['targetDay']
-                               ).save()
-            messages.success(request, 'رزرو مورد نظر با موفقیت ثبت شد')
-            return redirect('reservations')
+    if bookCheck == 0:
+        if userCheck < 4:
+            form = forms.createReservation(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                models.Reservation(user_id=data['user_id'],
+                                   book_id=data['book_id'],
+                                   targetDay=data['targetDay']
+                                   ).save()
+                messages.success(request, 'رزرو مورد نظر با موفقیت ثبت شد')
+                return redirect('reservations')
 
+            else:
+                messages.error(request, 'خطا در ثبت رزرو مورد نظر')
+                return redirect('reservations')
         else:
-            messages.error(request, 'خطا در ثبت رزرو مورد نظر')
+            messages.error(request, 'کاربر انتخابی 3 کتاب را به امانت دارد و نمی تواند کتاب جدیدی را به امانت بگیرد')
             return redirect('reservations')
     else:
-        messages.error(request, 'کاربر یا کتاب انتخابی در لیست امانت داران می باشد')
+        messages.error(request, 'کتاب انتخابی از قبل به امانت گرفته شده است')
         return redirect('reservations')
 
 

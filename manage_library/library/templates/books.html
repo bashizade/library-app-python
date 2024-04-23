@@ -3,15 +3,23 @@
 {% block title %}books page{% endblock %}
 
 {% block content %}
-{% include 'createBookModal.html' %}
+{% include 'createBookModal.html' with categories=categories %}
+<input type="text" class="input input-bordered w-full max-w-xs my-3" id="myInput" onkeyup="myFunction()" placeholder="Search for ....." />
+<select type="text" class="select input-bordered w-full max-w-xs my-3" id="search_select" onchange="search_category()" >
+    <option value="">سرچ در دسته بندی کتاب</option>
+    {% for category in categories %}
+    <option value="{{category.name}}">{{category.name}}</option>
+    {% endfor %}
+</select>
 <div class="overflow-x-auto">
-    <table class="table w-full text-center" dir="rtl">
+    <table class="table w-full text-center" id="myTable" dir="rtl">
         <!-- head -->
         <thead>
         <tr>
             <th></th>
             <th>نام کتاب</th>
             <th>کد کتاب</th>
+            <th>دسته های کتاب</th>
             <th></th>
         </tr>
         </thead>
@@ -21,6 +29,10 @@
             <th></th>
             <td>{{ book.name }}</td>
             <td>{{ book.code }}</td>
+            <td>{% for bookcategory in book.bookcategory_set.all %}
+            {{ bookcategory.category.name }} /
+            {% endfor %}
+            </td>
             <td><a href="{% url 'deleteBook' book_id=book.id %}">حذف</a></td>
         </tr>
         {% endfor %}
