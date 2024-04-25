@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en" data-theme="lemonade">
+<html lang="fa" data-theme="lemonade">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %} - mahs library</title>
@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{% static 'datepicker/persian-datepicker.css' %}">
 
     <script src="{% static 'jquery.js' %}"></script>
+    <script src="{% static 'toExcel.js' %}"></script>
     <script src="{% static 'select2/select2.js' %}"></script>
     <script src="{% static 'datepicker/persian-date.js' %}"></script>
     <script src="{% static 'datepicker/persian-datepicker.js' %}"></script>
@@ -94,6 +95,51 @@ function search_category() {
     }
   }
 }
+
+function exportToExcel(tableID, filename = ''){
+    var downloadurl;
+    var dataFileType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
+
+    // Specify file name
+    filename = filename?filename+'.xls':'export_excel_data.xls';
+
+    // Create download link element
+    downloadurl = document.createElement("a");
+
+    document.body.appendChild(downloadurl);
+
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTMLData], {
+            type: dataFileType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+        // Create a link to the file
+        downloadurl.href = 'data:' + dataFileType + ', ' + tableHTMLData;
+
+        // Setting the file name
+        downloadurl.download = filename;
+
+        //triggering the function
+        downloadurl.click();
+    }
+}
+
+    $(document).ready(function () {
+        $("#btnExport").click(function () {
+            let table = document.getElementById("myTable");
+            console.log(table);
+            debugger;
+            TableToExcel.convert(table, {
+                name: `data.xlsx`,
+                sheet: {
+                    name: 'data'
+                }
+            });
+        });
+    });
 </script>
 </body>
 </html>

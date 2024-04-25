@@ -101,7 +101,7 @@ def createCategory(request):
 def createReservation(request):
     userCheck = models.Reservation.objects.filter(user_id=request.POST['user_id']).count()
     bookCheck = models.Reservation.objects.filter(book_id=request.POST['book_id']).count()
-
+    print(request.POST)
     if bookCheck == 0:
         if userCheck < 4:
             form = forms.createReservation(request.POST)
@@ -109,7 +109,8 @@ def createReservation(request):
                 data = form.cleaned_data
                 models.Reservation(user_id=data['user_id'],
                                    book_id=data['book_id'],
-                                   targetDay=data['targetDay']
+                                   targetDay=data['targetDay'],
+                                   info=data['info']
                                    ).save()
                 messages.success(request, 'رزرو مورد نظر با موفقیت ثبت شد')
                 return redirect('reservations')

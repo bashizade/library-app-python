@@ -4,8 +4,9 @@
 
 {% block content %}
 {% include 'createReservation.html' with books=books users=users %}
+<button type="button" class="btn btn-neutral" id="btnExport">خروجی اکسل</button>
 <div class="overflow-x-auto">
-    <table class="table w-full text-center" dir="rtl">
+    <table class="table w-full text-center" id="myTable" dir="rtl">
         <!-- head -->
         <thead>
         <tr>
@@ -13,6 +14,7 @@
             <th>نام کاربر</th>
             <th>نام کتاب</th>
             <th>تاریخ پایان</th>
+            <th>توضیحات</th>
             <th></th>
         </tr>
         </thead>
@@ -23,6 +25,7 @@
             <td>{{ reservation.user.first_name }} {{ reservation.user.last_name }} - {{ reservation.user.profile.nationalCode }}</td>
             <td>{{ reservation.book.name }} - {{ reservation.book.code }}</td>
             <td>{{ reservation.targetDay }}</td>
+            <td>{{ reservation.info }}</td>
             <td><a href="{% url 'deleteReservation' reservation_id=reservation.id %}">آزادسازی</a></td>
         </tr>
         {% endfor %}

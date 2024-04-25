@@ -5,6 +5,7 @@
 {% load jformat %}
 {% block content %}
 {% include 'createUserModal.html' %}
+<button type="button" class="btn btn-neutral" id="btnExport">خروجی اکسل</button>
 <a href="{% url 'userCard' %}" target="_blank">{% include 'components/button.html' with type="button" text="خروجی کارت عصویت" %}</a>
 <input type="text" class="input input-bordered w-full max-w-xs my-3" id="myInput" onkeyup="myFunction()" placeholder="Search for ....." />
 <div class="overflow-x-auto">

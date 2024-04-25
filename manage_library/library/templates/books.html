@@ -4,6 +4,7 @@
 
 {% block content %}
 {% include 'createBookModal.html' with categories=categories %}
+<button type="button" class="btn btn-neutral" id="btnExport">خروجی اکسل</button>
 <input type="text" class="input input-bordered w-full max-w-xs my-3" id="myInput" onkeyup="myFunction()" placeholder="Search for ....." />
 <select type="text" class="select input-bordered w-full max-w-xs my-3" id="search_select" onchange="search_category()" >
     <option value="">سرچ در دسته بندی کتاب</option>

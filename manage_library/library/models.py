@@ -28,3 +28,4 @@ class Reservation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.OneToOneField(Book, on_delete=models.CASCADE)
     targetDay = models.CharField(max_length=255, null=True)
+    info = models.CharField(max_length=255, default=" ")
