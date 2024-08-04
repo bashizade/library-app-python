@@ -114,9 +114,8 @@ def createReservation(request):
                                    ).save()
                 messages.success(request, 'رزرو مورد نظر با موفقیت ثبت شد')
                 return redirect('reservations')
-
             else:
-                messages.error(request, 'خطا در ثبت رزرو مورد نظر')
+                messages.error(request, f'خطا در ثبت رزرو مورد نظر - {form.errors}')
                 return redirect('reservations')
         else:
             messages.error(request, 'کاربر انتخابی 3 کتاب را به امانت دارد و نمی تواند کتاب جدیدی را به امانت بگیرد')

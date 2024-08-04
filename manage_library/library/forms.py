@@ -24,4 +24,4 @@ class createReservation(forms.Form):
     user_id = forms.IntegerField()
     book_id = forms.IntegerField()
     targetDay = forms.CharField(max_length=255)
-    info = forms.CharField(max_length=255)
+    info = forms.CharField(max_length=255, required=False)
